@@ -7,6 +7,7 @@ import com.example.bank_account_service.enums.AccountType;
 import com.example.bank_account_service.mappers.AccountMapper;
 import com.example.bank_account_service.repositories.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +46,26 @@ public class AccountServiceImpl implements AccountService {
                 .build();*/
         BankAccountResponseDTO bankAccountResponseDTO = accountMapper.fromBankAccount(saveBankAccount);
         return bankAccountResponseDTO;
+    }
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id ,BankAccountRequestDTO bankAccountDTO)
+    {
+        BankAccount bA =BankAccount.builder()
+                .id(id)
+                .createAt(new Date())
+                .balance(bankAccountDTO.getBalance())
+                .type(bankAccountDTO.getType())
+                .currency(bankAccountDTO.getCurrency())
+                .build();
+        BankAccount saveBankAccount =bankAccountRepository.save(bA);
+        BankAccountResponseDTO bankAccountResponseDTO = accountMapper.fromBankAccount(saveBankAccount);
+        return bankAccountResponseDTO;
+    }
+
+    @Override
+    public void deleteAccount(String id )
+    {
+        bankAccountRepository.deleteById(id);
     }
 }

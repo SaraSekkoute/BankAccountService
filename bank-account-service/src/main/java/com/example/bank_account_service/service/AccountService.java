@@ -6,4 +6,8 @@ import com.example.bank_account_service.entities.BankAccount;
 
 public interface AccountService {
     public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
+
+    public BankAccountResponseDTO updateAccount(String id,BankAccountRequestDTO bankAccountDTO);
+
+    void deleteAccount(String id);
 }
